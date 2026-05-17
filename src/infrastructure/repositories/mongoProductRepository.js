@@ -1,5 +1,8 @@
 import ProductRepository from "../../domain/repositories/productRepository.js";
 import Product from "../../domain/entities/product.js";
+import AppError from "../../presentation/utils/AppError.js";
+import APIFeatures from "../utils/apiFeatures.js";
+
 class MongoProductRepository extends ProductRepository {
     constructor(productModel) {
         super();
@@ -23,8 +26,10 @@ class MongoProductRepository extends ProductRepository {
     async findById(id) {
         const product = await this.productModel.findById(id);
         if (!product) {
-            throw new Error('Product not found');
+            throw new AppError('Product not found', 404);
         }
+        console.log(product);
+
         return new Product(
             product._id,
             product.name,
@@ -35,16 +40,17 @@ class MongoProductRepository extends ProductRepository {
 
     }
 
-    async findAll(filters = {}) {
+    async findAll(queryOptions = {}) {
 
-        if (filters.name) {
-            filters.name = { $regex: filters.name, $options: 'i' };
-        }
-        if (filters.provider) {
-            filters.provider = { $regex: filters.provider, $options: 'i' };
-        }
 
-        const products = await this.productModel.find(filters);
+        const features = new APIFeatures(this.productModel.find(), queryOptions);
+
+        const products = await features
+            .filter()
+            .sort()
+            .limitFields()
+            .paginate().query;
+
 
         return products.map(product => new Product(
             product._id,

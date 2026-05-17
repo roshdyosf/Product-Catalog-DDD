@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 
 import Product from "../../domain/entities/product.js";
+import { log } from 'console';
 
 class CreateProductUseCase {
     constructor({ productRepository } = {}) {

@@ -17,16 +17,18 @@ const productRouter = Router();
 
 
 
-const createProductUseCase = new CreateProductUseCase(productRepository);
-const getProductUseCase = new GetProductUseCase(productRepository);
-const listProductsUseCase = new ListProductsUseCase(productRepository);
+const createProductUseCase = new CreateProductUseCase({ productRepository });
+const getProductUseCase = new GetProductUseCase({ productRepository });
+const listProductsUseCase = new ListProductsUseCase({ productRepository });
 
 
-const productController = new ProductController(
+const productController = new ProductController({
     createProductUseCase,
     getProductUseCase,
     listProductsUseCase
+}
 );
+
 productRouter.route('/')
     .post(productCreateValidator, (req, res, next) => productController.createProduct(req, res, next))
     .get((req, res, next) => productController.listProducts(req, res, next));

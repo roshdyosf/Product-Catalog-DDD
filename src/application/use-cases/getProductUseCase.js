@@ -11,6 +11,8 @@ class GetProductUseCase {
         if (!product) {
             throw new AppError('Product not found with this ID', 404);
         }
+        console.log(product);
+
         return product;
     }
 }

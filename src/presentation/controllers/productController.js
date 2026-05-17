@@ -27,11 +27,12 @@ class ProductController {
 
 
     listProducts = catchAsync(async (req, res, next) => {
-        const { page = 1, limit = 10 } = req.query;
-        const products = await this.listProductsUseCase.execute({ page, limit });
+
+        const products = await this.listProductsUseCase.execute(req.query);
         const productsRes = products.map(product => new ProductResponseDTO(product));
         res.status(200).json({
             status: 'success',
+            count: productsRes.length,
             data: { products: productsRes }
         });
     });

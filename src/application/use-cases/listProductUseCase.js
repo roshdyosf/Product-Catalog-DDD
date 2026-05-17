@@ -5,8 +5,10 @@ class ListProductUseCase {
         this.productRepository = productRepository;
     }
 
-    async execute(filters = {}) {
-        const products = await this.productRepository.findAll(filters);
+    async execute(queryParams) {
+
+        const products = await this.productRepository.findAll(queryParams);
+
         return products;
     }
 }

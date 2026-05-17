@@ -9,15 +9,30 @@ import { globalErrorHandler } from './middlewares/errorMiddleware.js';
 
 import productRouter from './routes/productRoutes.js';
 
+
+//================================================================
 const app = express();
 // 1. Global Middlewares
 
-// 1.1 Logging
+
+
+// 1.1 Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+
+
+// 1.2 Data sanitization against NoSQL query injection
+// app.use(
+//     mongoSanitize({
+//         replaceWith: '_',
+//     })
+// );
+
+// 1.3 Logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// 1.2 Limit requests from same API
+// 1.4 Limit requests from same API
 const limiter = rateLimit({
     max: 100,
     windowMs: 60 * 60 * 1000, // 1 hour
@@ -25,19 +40,21 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// 1.3 Body parser, reading data from body into req.body
-app.use(express.json({ limit: '10kb' }));
 
-// 1.4 Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
+
+
+
+
 
 // 1.5 Prevent parameter pollution
+
 app.use(hpp());
 
+
+//================================================================
+
+
 // 2. Routes
-// --- IGNORE ---
-
-
 app.use('/api/v1/products', productRouter);
 
 
