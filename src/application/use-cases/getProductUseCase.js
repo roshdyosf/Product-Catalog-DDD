@@ -1,5 +1,5 @@
 import Product from "../../domain/entities/product.js";
-import AppError from "../../infrastructure/webserver/utils/AppError.js";
+import AppError from "../../presentation/utils/AppError.js";
 class GetProductUseCase {
 
     constructor({ productRepository } = {}) {
