@@ -1,5 +1,3 @@
-import { object } from "joi";
-
 class CreateProductDTO {
     constructor(name, price, description, provider, quantity) {
         this.name = name;

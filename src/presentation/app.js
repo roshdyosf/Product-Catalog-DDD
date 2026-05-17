@@ -7,8 +7,7 @@ import hpp from 'hpp';
 import AppError from './utils/AppError.js';
 import { globalErrorHandler } from './middlewares/errorMiddleware.js';
 
-// un finshed file, just to show the global error handler and middlewares in action.
-// The routes and controllers are not implemented yet.
+import productRouter from './routes/productRoutes.js';
 
 const app = express();
 // 1. Global Middlewares
@@ -39,12 +38,12 @@ app.use(hpp());
 // --- IGNORE ---
 
 
-
+app.use('/api/v1/products', productRouter);
 
 
 
 // 3. Handle unhandled routes
-app.all('*', (req, res, next) => {
+app.all(/(.*)/, (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 

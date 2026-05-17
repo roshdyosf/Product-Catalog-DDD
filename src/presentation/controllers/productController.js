@@ -7,7 +7,7 @@ class ProductController {
         this.getProductUseCase = getProductUseCase;
         this.listProductsUseCase = listProductsUseCase;
     }
-    createProduct = catchAsync(async (req, res) => {
+    createProduct = catchAsync(async (req, res, next) => {
         const productData = new CreateProductDTO(req.body);
         const createdProduct = await this.createProductUseCase.execute(productData);
         res.status(201).json({
@@ -16,7 +16,7 @@ class ProductController {
         });
     });
 
-    getProduct = catchAsync(async (req, res) => {
+    getProduct = catchAsync(async (req, res, next) => {
         const { id } = req.params;
         const product = await this.getProductUseCase.execute(id);
         res.status(200).json({
@@ -26,7 +26,7 @@ class ProductController {
     });
 
 
-    listProducts = catchAsync(async (req, res) => {
+    listProducts = catchAsync(async (req, res, next) => {
         const { page = 1, limit = 10 } = req.query;
         const products = await this.listProductsUseCase.execute({ page, limit });
         const productsRes = products.map(product => new ProductResponseDTO(product));

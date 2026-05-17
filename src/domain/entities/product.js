@@ -1,4 +1,4 @@
-import { validateProduct } from "../services/productValidator";
+import { validateProduct } from "../services/productValidator.js";
 
 class Product {
     constructor(id, name, price, provider, description, quantity) {

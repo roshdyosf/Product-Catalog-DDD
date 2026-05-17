@@ -2,6 +2,7 @@ import ProductRepository from "../../domain/repositories/productRepository.js";
 import Product from "../../domain/entities/product.js";
 class MongoProductRepository extends ProductRepository {
     constructor(productModel) {
+        super();
         this.productModel = productModel;
     }
 

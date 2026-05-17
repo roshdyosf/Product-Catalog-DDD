@@ -2,7 +2,7 @@ import Joi from "joi";
 import AppError from "../utils/AppError.js";
 
 
-export const validateCreateProduct = (req, res, next) => {
+export const productCreateValidator = (req, res, next) => {
     const schema = Joi.object({
         name: Joi.string().min(3).max(100).required().messages({
             'string.base': 'Name must be a string',
