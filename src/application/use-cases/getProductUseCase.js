@@ -1,5 +1,5 @@
 import Product from "../../domain/entities/product.js";
-
+import AppError from "../../infrastructure/webserver/utils/AppError.js";
 class GetProductUseCase {
 
     constructor({ productRepository } = {}) {
@@ -9,7 +9,7 @@ class GetProductUseCase {
     async execute(id) {
         const product = await this.productRepository.findById(id);
         if (!product) {
-            throw new Error('ID miss match. Product not found');
+            throw new AppError('Product not found with this ID', 404);
         }
         return product;
     }
