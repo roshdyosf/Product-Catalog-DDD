@@ -1,6 +1,4 @@
 import { Kafka } from 'kafkajs';
-import { catchAsync } from '../../presentation/utils/catchAsync';
-
 const kafka = new Kafka({
     clientId: 'product-catalog-service',
     brokers: [process.env.KAFKA_BROKERS || 'localhost:9092']

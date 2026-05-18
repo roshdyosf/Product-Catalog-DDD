@@ -1,26 +1,37 @@
 import app from './src/presentation/app.js';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import { startKafkaConsumer } from './src/infrastructure/messaging/kafkaConsumer.js';
 
 const PORT = process.env.PORT || 3000;
-
-
 let server;
-// Connect to MongoDB
-mongoose.connect(process.env.DATABASE_URL, {
-    family: 4, // Use IPv4, comment this if you need IPv6
-}).then(() => {
-    console.log('Connected to MongoDB');
-
-    server = app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-
-}).catch(err => {
-    console.log('DB Connection Error: ', err.message);
-});
 
 
+const startServer = async () => {
+    try {
+
+        await mongoose.connect(process.env.DATABASE_URL, {
+            family: 4,
+        });
+        console.log('Connected to MongoDB');
+
+
+        server = app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+
+
+        console.log('Connecting to Kafka...');
+        await startKafkaConsumer();
+
+    } catch (err) {
+        console.error('❌ [Server Boot Error]: ', err.message);
+        process.exit(1);
+    }
+};
+
+
+startServer();
 
 
 process.on('unhandledRejection', err => {
