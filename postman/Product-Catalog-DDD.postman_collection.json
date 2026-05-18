@@ -1,0 +1,139 @@
+{
+  "info": {
+    "_postman_id": "22bd9d42-cc44-485d-aaa8-3b55f5c7510a",
+    "name": "Product-Catalog-DDD",
+    "description": "StartFragment\n\n# 📦 Product Catalog Service (DDD Architecture)\n\nThis Postman collection is designed to test and interact with the **Product Catalog Microservice**, built following **Domain-Driven Design (DDD)** principles. The service manages product data and integrates with **Apache Kafka** for event-driven logging and communication.\n\n## 🛠️ Tech Stack & Infrastructure\n\n- **Backend:** Node.js / Express.js\n    \n- **Database:** MongoDB\n    \n- **Message Broker:** Apache Kafka (Event-Driven Logging)\n    \n- **Containerization:** Docker & Docker Compose\n    \n\n---\n\n## 🚀 How to Get Started\n\n### 1\\. Set Up Environment Variables\n\nBefore running the requests, make sure you configure the environment variable in Postman:\n\n- `URL`: Set this to your local running instance (e.g., `http://localhost:3000/`).\n    \n\n### 2\\. Run Infrastructure\n\nEnsure your local environment is up and running via Docker Compose:\n\nBash\n\n``` bash\ndocker-compose-prod up -d\n\n ```\n\n---\n\n## 🛣️ API Endpoints Reference\n\nAll endpoints in this collection share the same base route: `{{URL}}api/v1/products/`.\n\n### 1\\. 📋 List All Products\n\n- **Method:** `GET`\n    \n- **URL:** `{{PROD_URL}}api/v1/products/`\n    \n- **Description:** Retrieves a list of all available products in the catalog.\n    \n\n### 2\\. 🔍 Get Product By ID\n\n- **Method:** `GET`\n    \n- **URL:** `{{PROD_URL}}api/v1/products/:id`\n    \n- **Description:** Fetches details of a specific product using its unique ID.\n    \n\n### 3\\. ➕ Create New Product\n\n- **Method:** `POST`\n    \n- **URL:** `{{PROD_URL}}api/v1/products/`\n    \n- **Body (JSON):** Send the product details (e.g., `name`, `price`, `description`).\n    \n- **Note:** Creating a product will trigger a Kafka event for asynchronous logging/processing.\n    \n\n---\n\n## 🐳 Docker & Kafka Integration\n\n- The service automatically produces logs/events to Kafka topics when certain commands (like creating a product) are executed.\n    \n- Check your Docker logs or Kafka consumer to verify event-driven execution.\n    \n\nEndFragment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37887277"
+  },
+  "item": [
+    {
+      "name": "GetById",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Corsair RM850x 850W PSU\",\r\n    \"price\": 139.99,\r\n    \"provider\": \"Compumegastore\",\r\n    \"description\": \"Fully modular Corsair power supply, 80 Plus Gold certified.\",\r\n    \"quantity\": 6\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{PROD_URL}}api/v1/products/:id",
+          "host": [
+            "{{PROD_URL}}api"
+          ],
+          "path": [
+            "v1",
+            "products",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{PROD_URL}}api/v1/products/",
+          "host": [
+            "{{PROD_URL}}api"
+          ],
+          "path": [
+            "v1",
+            "products",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Corsair RM850x 850W PSU\",\r\n    \"price\": 139.99,\r\n    \"provider\": \"Compumegastore\",\r\n    \"description\": \"Fully modular Corsair power supply, 80 Plus Gold certified.\",\r\n    \"quantity\": 6\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{PROD_URL}}api/v1/products",
+          "host": [
+            "{{PROD_URL}}api"
+          ],
+          "path": [
+            "v1",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "DEV_URL",
+      "value": ""
+    },
+    {
+      "key": "PROD_URL",
+      "value": ""
+    }
+  ]
+}
