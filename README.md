@@ -216,3 +216,19 @@ src/
 ├── domain/             # Entities, repository interfaces, domain services
 └── infrastructure/     # MongoDB models, repositories, Kafka client
 ```
+
+## 🌐 Deployment & Live Demo
+
+The application is fully deployed and running in a live production environment. You can access the microservice and interact with the production API using the following details:
+
+- **Production API Base URL:** `https://product-catalog-ddd.onrender.com/api/v1/products`
+- **API Version:** `v1`
+- **Environment Status:** Active 🟢
+
+### 🧪 Testing the Live Deployment
+
+If you want to test the production server using the provided Postman collection:
+
+1. Open Postman and go to the collection's **Variables** tab.
+2. Update the `PROD_URL` variable's _Current Value_ to point to the live deployment URL above.
+3. Make sure you are connected to the internet, and start sending requests to verify the live endpoints.
