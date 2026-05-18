@@ -9,9 +9,3 @@ services:
     restart: always
     depends_on:
       - kafka
-  kafka:
-    volumes:
-      - kafka_data:/bitnami/kafka
-    restart: always
-volumes:
-  kafka_data:
