@@ -3,9 +3,9 @@ import { Kafka } from 'kafkajs';
 const kafka = new Kafka({
     clientId: 'product-catalog-service',
     brokers: [process.env.KAFKA_BROKERS || 'localhost:9092'],
-    ssl: process.env.KAFKA_USERNAME ? true : false,
+    ssl: process.env.KAFKA_USERNAME ? { rejectUnauthorized: false } : false,
     sasl: process.env.KAFKA_USERNAME ? {
-        mechanism: 'scram-sha-256',
+        mechanism: 'plain',
         username: process.env.KAFKA_USERNAME,
         password: process.env.KAFKA_PASSWORD
     } : undefined
