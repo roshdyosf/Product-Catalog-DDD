@@ -1,8 +1,5 @@
-import { Kafka } from 'kafkajs';
-const kafka = new Kafka({
-    clientId: 'product-catalog-service',
-    brokers: [process.env.KAFKA_BROKERS || 'localhost:9092']
-});
+import kafka from "./kafkaClient.js";
+
 const producer = kafka.producer();
 
 export const publishProductCreatedEvent = async (product) => {

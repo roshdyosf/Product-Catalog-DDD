@@ -1,12 +1,8 @@
-import { Kafka } from 'kafkajs';
+import kafka from "./kafkaClient.js";
 
-const kafkaInstance = new Kafka({
-    clientId: 'product-catalog-consumer',
-    brokers: [process.env.KAFKA_BROKERS || 'localhost:9092']
-});
 
-const consumer = kafkaInstance.consumer({ groupId: 'product-logger-group' });
 
+const consumer = kafka.consumer({ groupId: 'product-logger-group' });
 
 export const startKafkaConsumer = async () => {
     try {
